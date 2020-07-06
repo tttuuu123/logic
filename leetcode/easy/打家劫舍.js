@@ -1,4 +1,3 @@
-
 /* 
     你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
 
@@ -33,15 +32,15 @@
  * @return {number}
  */
 var rob = function(nums) {
-    const len = nums.length;
-    if (len === 0) return 0;
-    const res = [nums[0]];
-    for (let i = 1; i < len; i += 1) {
-        res[i] = Math.max(res[i - 1] || 0, (res[i - 2] || 0) + nums[i]);
-    }
-    return Math.max(res[len - 1], res[len - 2]);
+  const len = nums.length;
+  if (len === 0) return 0;
+  const res = [nums[0]];
+  for (let i = 1; i < len; i += 1) {
+    res[i] = Math.max(res[i - 1] || 0, (res[i - 2] || 0) + nums[i]);
+  }
+  return Math.max(res[len - 1], res[len - 2]);
 };
 
 /**
- * f(n) = Math.max(f(n - 1), f(n - 2) + val(n))
+ * f(n) = Math.max(f(n - 1), f(n - 2)) + val(n)
  */
