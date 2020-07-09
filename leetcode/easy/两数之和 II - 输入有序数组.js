@@ -19,15 +19,31 @@
  * @param {number} target
  * @return {number[]}
  */
+// var twoSum = function(numbers, target) {
+//   const map = {}
+//   let diff;
+//   for (let i = 0, len = numbers.length; i < len; i += 1) {
+//     diff = target - numbers[i];
+//     if (map[diff] !== undefined) {
+//       return [map[diff] + 1, i + 1];
+//     } else {
+//       map[numbers[i]] = i;
+//     }
+//   }
+// };
+
 var twoSum = function(numbers, target) {
-  const map = {};
-  let diff;
-  for (let i = 0, len = numbers.length; i < len; i += 1) {
-    diff = target - numbers[i];
-    if (map[diff]) {
-      return [map[diff], i];
+  let left = 0;
+  let right = numbers.length;
+  let sum;
+  while (left <= right) {
+    sum = numbers[left] + numbers[right];
+    if (sum === target) {
+      return [left + 1, right + 1];
+    } else if (sum < target) {
+      left += 1;
     } else {
-      map[numbers[i]] = i;
+      right -= 1;
     }
   }
 };
