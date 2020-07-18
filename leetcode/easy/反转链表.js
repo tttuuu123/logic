@@ -20,17 +20,14 @@
  * @return {ListNode}
  */
 var reverseList = function(head) {
-  const temp = [];
-  let h = head.next;
-  while (h) {
-    temp.push(h);
-    h = h.next;
+  let cur = head;
+  let pre = null;
+  let temp;
+  while (cur) {
+    temp = cur.next;
+    cur.next = pre;
+    pre = cur;
+    cur = temp;
   }
-  const preHead = new ListNode(null);
-  let pre = preHead;
-  temp.reverse().forEach((node) => {
-    pre.next = node;
-    pre = pre.next;
-  });
-  return preHead.next;
+  return pre;
 };
