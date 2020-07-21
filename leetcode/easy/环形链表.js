@@ -46,8 +46,20 @@ var hasCycle = function(head) {
   const map = new Map();
   while (head) {
     if (map.has(head)) return true;
-    map.set(head);
+    map.set(head, true);
     head = head.next;
+  }
+  return false;
+};
+
+var hasCycle = function(head) {
+  if (!head || !head.next) return false
+  let fast = head.next.next;
+  let slow = head.next;
+  while (slow !== fast) {
+    if (!fast || !fast.next) return false;
+    fast = fast.next.next;
+    slow = slow.next;
   }
   return false;
 };
