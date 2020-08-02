@@ -32,17 +32,20 @@
  * @return {boolean}
  */
 var checkInclusion = function(s1, s2) {
+  const l1 = s1.length;
+  const l2 = s2.length;
+  if (l1 > l2) return false;
   const letters = new Array(26).fill(0);
-  for (let i = 0; i < s1.length; i += 1) {
+  for (let i = 0; i < l1; i += 1) {
     letters[s1[i].charCodeAt() - 97] += 1;
     letters[s2[i].charCodeAt() - 97] -= 1;
   }
   const isTrue = (arr) => arr.every(i => i === 0);
-  if (isTrue) return true;
-  for (let i = s1.length; i < s2.length; i += 1) {
+  if (isTrue(letters)) return true;
+  for (let i = l1; i < l2; i += 1) {
     letters[s2[i].charCodeAt() - 97] -= 1;
-    letters[s2[i - s1.length].charCodeAt() - 97] += 1;
-    if (isTrue) return true;
+    letters[s2[i - l1].charCodeAt() - 97] += 1;
+    if (isTrue(letters)) return true;
   }
   return false;
 };
