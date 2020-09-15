@@ -28,3 +28,7 @@ var nextGreaterElements = function(nums) {
   }
   return ret.slice(0, ret.length / 2);
 };
+
+/**
+ * 看到循环就把长度 * 2
+ */
