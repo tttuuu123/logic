@@ -55,6 +55,7 @@ var combinationSum = function(candidates, target) {
       ret.push(arr);
       return;
     }
+    if (target < 0) return;
     run(arr, target, idx + 1);
     const diff = target - candidates[idx];
     if (diff >= 0) {
