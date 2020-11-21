@@ -45,7 +45,7 @@
  */
 var combinationSum = function(candidates, target) {
   const ret = [];
-  candidates.sort((a, b) => a - b);
+  // candidates.sort((a, b) => a - b);
   run([], target, 0);
   return ret;
   
@@ -55,7 +55,6 @@ var combinationSum = function(candidates, target) {
       ret.push(arr);
       return;
     }
-    if (target < 0) return;
     run(arr, target, idx + 1);
     const diff = target - candidates[idx];
     if (diff >= 0) {
