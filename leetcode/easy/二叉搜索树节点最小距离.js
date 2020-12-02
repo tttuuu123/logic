@@ -37,13 +37,18 @@
  * @return {number}
  */
 var minDiffInBST = function(root) {
+	const vals = {};
+	run(root);
+	const sortedVals = Object.keys(vals);
 	let min = Infinity;
+	for (let i = 1; i < sortedVals.length; i += 1) {
+		min = Math.min(min, sortedVals[i] - sortedVals[i - 1]);
+	}
 	return min;
-
-	function run(root, val) {
+	function run(root) {
 		if (!root) return;
-		min = Math.min(Math.abs(root.val - val), min);
-		run(root.left, root.val);
-		run(root.rigth, root.val);
+		vals[+root.val] = 1;
+		run(root.left);
+		run(root.right);
 	}
 };
