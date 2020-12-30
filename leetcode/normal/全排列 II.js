@@ -38,14 +38,14 @@ var permuteUnique = function(nums) {
 
   function help(arr) {
     if (arr.length === len) {
-      ret.push(arr);
+      ret.push([...arr]);
       return;
     }
     for (let i = 0; i < nums.length; i += 1) {
       if (nums[i] === nums[i - 1]) continue;
       arr.push(nums[i]);
       nums.splice(i, 1);
-      help([...arr]);
+      help(arr);
       nums.splice(i, 0, arr.pop());
     }
   }
@@ -59,3 +59,26 @@ var permuteUnique = function(nums) {
  * 既可保证每次填入的数一定是这个数所在重复数集合中「从左往右第一个未被填过的数字」
  * 同样的在回溯时要将used[i]复原为true
  */
+
+var permuteUnique = function(nums) {
+  const ret = [];
+  nums.sort((a, b) => a - b);
+  const used = new Array(nums.length).fill(false);
+  help([]);
+  return ret;
+
+  function help(arr) {
+    if(arr.length === nums.length) {
+      ret.push([...arr]);
+      return;
+    }
+    for (let i = 0; i < nums.length; i += 1) {
+      if (used[i] || (i > 0 && nums[i] === nums[i - 1] && !used[i - 1])) continue;
+      arr.push(nums[i]);
+      used[i] = true;
+      help(arr);
+      arr.pop();
+      used[i] = false;
+    }
+  }
+};
