@@ -47,14 +47,14 @@ var numIslands = function(grid) {
   for (let i = 0; i < row; i += 1) {
     for (let j = 0; j < col; j += 1) {
       if (grid[i][j] === '1') {
-        run(grid, i, j);
+        run(i, j);
         count += 1;
       }
     }
   }
   return count;
 
-  function run(grid, i, j) {
+  function run(i, j) {
     if (
       i < 0
       || i >= row
@@ -63,9 +63,9 @@ var numIslands = function(grid) {
       || grid[i][j] === '0'
     ) return;
     grid[i][j] = '0';
-    run(grid, i + 1, j);
-    run(grid, i - 1, j);
-    run(grid, i, j + 1);
-    run(grid, i, j - 1);
+    run(i + 1, j);
+    run(i - 1, j);
+    run(i, j + 1);
+    run(i, j - 1);
   }
 };
