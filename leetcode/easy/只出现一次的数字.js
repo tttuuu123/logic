@@ -34,3 +34,10 @@ var singleNumber = function(nums) {
     }
   }
 };
+
+/**
+ * 利用 按位异或^ 的特性 不同为1 相同为0
+ */
+var singleNumber = function(nums) {
+  return nums.reduce((val, num) => val ^ num);
+};
