@@ -25,12 +25,12 @@
  * @return {number[]}
  */
 var countBits = function(num) {
-  const ret = new Array(num.length + 1).fill(0);
-  for (let i = 1; i < num.length; i += 1) {
+  const ret = new Array(num + 1).fill(0);
+  for (let i = 1; i < num + 1; i += 1) {
     ret[i] = ret[i >> 1] + (i & 1);
   }
+  return ret;
 };
-
 /**
  * i >> 1 等于 ~~(i / 2) 必然比 i 小
  * 即 ret[i >> 1] 在计算 ret[i] 之前已经计算过了
