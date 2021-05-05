@@ -64,5 +64,6 @@ var postorderTraversal = function(root) {
 };
 
 /**
- * 利用栈来解决一类问题的通用解体方法
+ * 利用栈来解决一类问题的通用解体方法：
+ * 递归函数转非递归
  */
