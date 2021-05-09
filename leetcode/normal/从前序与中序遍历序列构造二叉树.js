@@ -46,3 +46,9 @@ var buildTree = function(preorder, inorder) {
   const root = new TreeNode(preorder[0], buildTree(lPreorder, lInorder), buildTree(rPreorder, rInorder));
   return root;
 };
+
+/**
+ * 根据前序和中序
+ * 找出左子树的前序和中序
+ * 找出右子树的前序和中序
+ */
