@@ -29,3 +29,64 @@ var getLeastNumbers = function(arr, k) {
   arr.sort((a, b) => a - b);
   return arr.slice(0, k);
 };
+
+
+/**
+ * 堆专门用来解决最值问题
+ * 此题构造一个大顶堆
+ */
+
+function swap(arr, i, j) {
+  [arr[i], arr[j]] = [arr[j], arr[i]];
+}
+class MaxHeap {
+  constructor(arr = []) {
+    if (!Array.isArray(arr)) {
+      throw new Error('require array!');
+    }
+    this.heap = arr;
+    arr.forEach(this.push.bind(this));
+  }
+
+  push(n) {
+    const heap = this.heap;
+    heap.push(n);
+    // 向上调整
+    let idx = heap.length - 1;
+    while (idx) {
+      const parent = ~~((idx - 1) / 2);
+      if (heap[idx] <= heap[parent]) break;
+      swap(heap, idx, parent);
+      idx = parent;
+    }
+  }
+
+  pop() {
+    const heap = this.heap;
+    if (heap.length === 0) return;
+    swap(heap, 0, heap.length - 1);
+    const ret = heap.pop();
+    // 向下调整
+    let idx = 0;
+    let temp = idx * 2 + 1;
+    while (temp < heap.length) {
+      const right = idx * 2 + 2;
+      if (right < heap.length && heap[right] > heap[temp]) temp = right;
+      if (heap[idx] >= heap[temp]) break;
+      swap(heap, idx, temp);
+      idx = temp;
+      temp = idx * 2 + 1;
+    }
+    return ret;
+  }
+}
+
+var getLeastNumbers = function(arr, k) {
+  if (k >= arr.length) return arr;
+  const ins = new MaxHeap();
+  for (let i = 0; i < arr.length; i += 1) {
+    ins.push(arr[i]);
+    if (i === k) ins.pop();
+  }
+  return ins.heap;
+};
