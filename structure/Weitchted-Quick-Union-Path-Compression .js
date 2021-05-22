@@ -1,4 +1,4 @@
-// 按质优化
+// 按质优化，压缩路径
 export class UnionSet {
   constructor(n) {
     this.parent = [];
@@ -11,7 +11,9 @@ export class UnionSet {
 
   find(x) {
     if (this.parent[x] === x) return x;
-    return this.find(this.parent[x]);
+    const root = this.find(this.parent[x]);
+    this.parent[x] = root;
+    return root;
   }
 
   merge(a, b) {
