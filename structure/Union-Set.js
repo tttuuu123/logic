@@ -4,6 +4,7 @@ export class UnionSet {
     this.size = [];
     for (let i = 0; i < n; i += 1) {
       this.parent[i] = i;
+      this.size[i] = 1;
     }
   }
 
@@ -12,6 +13,14 @@ export class UnionSet {
   }
 
   merge(a, b) {
-    this.parent[this.get(a)] = this.get(b);
+    const fa = this.get(a);
+    const fb = this.get(b);
+    if (fa === fb) return;
+    this.parent[fa] = fb;
+    this.size[fb] += this.size[fa];
+  }
+
+  getSize(x) {
+    return this.size[this.get(x)];
   }
 }
