@@ -2,6 +2,7 @@ function swap(arr, i, j) {
   [arr[i], arr[j]] = [arr[j], arr[i]];
 }
 
+// 三点取中找基准值
 function getMid(a, b, c) {
   if (a >= b && a <= c) return a;
   if (b >= a && b <= c) return b;
@@ -11,6 +12,7 @@ function getMid(a, b, c) {
 const threshold = 0;  // 设置分区大小
 
 export function QuickSort(arr, left = 0, right = arr.length - 1) {
+  // 单边递归
   while (right - left > threshold) {
     let l = left;
     let r = right;
