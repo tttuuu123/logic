@@ -50,8 +50,8 @@ var sortList = function(head) {
     if (min > cur.val) min = cur.val;
     cur = cur.next;
   }
-  if (max === min) return head;
-  const base = (max + min) / 2;
+  if (max === min) return head; // 核心的退出递归条件
+  const base = (max + min) >> 1;
   let smallerHead = null;
   let biggerHead = null;
   let temp;
