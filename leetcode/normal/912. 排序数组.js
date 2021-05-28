@@ -52,3 +52,8 @@ function QuickSort(arr, l = 0, r = arr.length - 1) {
   QuickSort(arr, l, x - 1);
   QuickSort(arr, x, r);
 }
+
+/**
+ * 因为基准值取的第一个元素
+ * 所以若原数组趋于有序，则快排时间复杂度退化为O(n^2)
+ */
