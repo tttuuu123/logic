@@ -14,9 +14,9 @@ export function mergeSort(arr, l = 0, r = arr.length - 1) {
         i <= mid && arr[i] <= arr[j]
       )
     ) {
-      temp.push(arr[i]);
+      temp.push(arr[i++]);
     } else {
-      temp.push(arr[j]);
+      temp.push(arr[j++]);
     }
   }
   for (let i = l; i <= r; i += 1) {
