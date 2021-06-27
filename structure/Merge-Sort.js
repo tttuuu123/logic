@@ -1,6 +1,6 @@
 // 二路归并排序
 export function mergeSort(arr, l = 0, r = arr.length - 1) {
-  if (left >= r) return;
+  if (l >= r) return;
   const mid = (l + r) >> 1;
   mergeSort(arr, l, mid);
   mergeSort(arr, mid + 1, r);
