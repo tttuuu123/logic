@@ -63,3 +63,37 @@ var searchRange = function(nums, target) {
   }
   return [-1, -1];
 };
+
+
+
+
+/**
+ * 泛化成二分的0｜1型问题
+ */
+function binarySearch(nums, target) {
+  let l = 0;
+  let r = nums.length - 1;
+  let mid;
+  while (r - l > 3) {
+    mid = (l + r) >> 1;
+    if (nums[mid] >= target) {
+      r = mid;
+    } else {
+      l = mid + 1;
+    }
+  }
+  for (let i = l; i <= r; i += 1) {
+    if (nums[i] >= target) return i;
+  }
+  return nums.length;
+}
+
+var searchRange = function(nums, target) {
+  const ret = [];
+  ret[0] = binarySearch(nums, target);
+  // 不存在target
+  if (ret[0] === nums.length || nums[ret[0]] !== target) return [-1, -1];
+  // 存在target
+  ret[1] = binarySearch(nums, target + 1) - 1;
+  return ret;
+}
