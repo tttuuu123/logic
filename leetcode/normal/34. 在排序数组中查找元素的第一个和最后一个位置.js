@@ -68,7 +68,7 @@ var searchRange = function(nums, target) {
 
 
 /**
- * 泛化成二分的0｜1型问题
+ * 泛化成二分的0｜1模型问题
  */
 function binarySearch(nums, target) {
   let l = 0;
