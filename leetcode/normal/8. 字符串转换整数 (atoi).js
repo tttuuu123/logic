@@ -55,8 +55,10 @@ var myAtoi = function(str) {
     let res = str.trim().match(/^(\+|\-)?\d+/);
     if (!res) return 0;
     res = res[0];
-    if (res > (Math.pow(2, 31) - 1)) return Math.pow(2, 31) - 1;
-    if (res < Math.pow(-2, 31)) return Math.pow(-2, 31);
+    const MAX = Math.pow(2, 31) - 1;
+    const MIN = Math.pow(-2, 31);
+    if (res > MAX) return MAX;
+    if (res < MIN) return MIN;
     return res;
 };
 
