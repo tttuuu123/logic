@@ -36,6 +36,6 @@ var minimumTotal = function(triangle) {
 };
 
 /* 
-  f(i, j) = min(f(i - 1, j -1) || Infinity, f(i - 1, j) || Infinity) + val(i, j)
+  f(i, j) = min(f(i - 1, j - 1) || Infinity, f(i - 1, j) || Infinity) + val(i, j)
   数组中可能有负数
 */
