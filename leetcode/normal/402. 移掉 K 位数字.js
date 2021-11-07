@@ -46,3 +46,12 @@ var removeKdigits = function(num, k) {
   }
   return stack.length ? stack.join('') : '0';
 };
+
+/**
+ * 核心思想：尽可能让小的数字在前面
+ * 所以 维护一个单调递减栈
+ * 若 入栈元素小于栈顶元素
+ * 则 弹出栈顶元素
+ * 最多弹出k个元素
+ * 栈中剩余元素即结果
+ */
