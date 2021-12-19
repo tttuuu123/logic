@@ -48,3 +48,50 @@ var isPalindrome = function(head) {
   }
   return true;
 };
+
+/**
+ * 上述方式需要额外的存储空间
+ */
+
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var isPalindrome = function(head) {
+  if (!head) return false;
+  let slow = head;
+  let fast = head;
+  while (slow.next && fast.next?.next) {
+    slow = slow.next;
+    fast = fast.next?.next;
+  }
+  slow.next = reverse(slow.next);
+  let p = head;
+  let q = slow.next;
+  while (p && q) {
+    if (p.val !== q.val) return false;
+    p = p.next;
+    q = q.next;
+  }
+  return true;
+
+  function reverse(head) {
+    let cur = head;
+    let pre;
+    let temp;
+    while (cur) {
+      temp = cur.next;
+      cur.next = pre;
+      pre = cur;
+      cur = temp;
+    }
+    return pre;
+  }
+};
