@@ -34,3 +34,24 @@ var repeatedSubstringPattern = function(s) {
   const str = s + s;
   return str.substr(1, str.length - 2).indexOf(s) !== -1;
 };
+
+/**
+ * KPM
+ */
+var repeatedSubstringPattern = function(s) {
+  const len = s.length;
+  const next = [-1];
+  for (let i = 1, j = -1; i < len; i += 1) {
+    while (j !== -1 && s[j + 1] !== s[i]) j = next[j];
+    if (s[j + 1] === s[i]) j += 1;
+    next[i] = j;
+  }
+  return (next[len - 1] !== -1) && (len % (len - (next[len - 1] + 1)) === 0)
+};
+
+/**
+ * next[len - 1] !== -1： s中最后一个字母重复出现
+ * len - (next[len - 1] + 1)：重复子串长度
+ * len % (len - (next[len - 1] + 1)) === 0：s的长度可以整除重复子串长度
+ */
+
