@@ -40,7 +40,10 @@ var shortestPalindrome = function(s) {
     // 场景: aaba，转换后为aabaabaa
     while (next[i] >= s.length) next[i] = next[next[i]];
   }
-  const target = next[len - 1];
-  str = str.substring(target + 1, len / 2);
+  str = str.substring(next[len - 1] + 1, len / 2);
   return reS + str;
 };
+
+/**
+ * 如果用暴力解法，就是找原串最长的回文前缀
+ */
