@@ -54,3 +54,23 @@ var lengthOfLIS = function(nums) {
  * dp(n) = dp[j] + 1
  * j 为 n 之前所有满足 arr[j] < arr[n] 的位置中 dp[j] 最大的那个下标
  */
+
+
+var lengthOfLIS = function(nums) {
+  const stack = [];
+  let ret = 0;
+  for (let i = 0; i < nums.length; i += 1) {
+    while (stack.length && stack[stack.length - 1] >= nums[i]) stack.pop();
+    stack.push(nums[i]);
+    ret = Math.max(ret, stack.length);
+  }
+  return ret;
+};
+
+/**
+ * [0,1,0,3,2,3] 但是这种场景会得出结论3，所以不正确，
+ * 单调栈还是适合用来做区间最值问题，还是用上面的动态规划吧
+ * 用一个严格单调递增栈来辅助判断，栈内的所有元素都满足条件，只要找到栈内元素最多的时候
+ * 因为while循环内的每个数只会进一次，出一次，最多2次
+ * 所以整体时间复杂度是O(n)
+ */
