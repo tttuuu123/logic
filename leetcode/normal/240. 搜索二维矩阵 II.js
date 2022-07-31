@@ -36,7 +36,7 @@
  * @return {boolean}
  */
 var searchMatrix = function(matrix, target) {
-  // 左上角坐标
+  // 右上角坐标
   let i = 0;
   let j = matrix[0].length - 1;
   while (i < matrix.length && j >= 0) {
@@ -55,4 +55,8 @@ var searchMatrix = function(matrix, target) {
  * a是第一行最大的元素，同时也是最后一列最小的元素
  * 如果目标值比a大，则说明i可以 加1
  * 如果目标值比a小，则说明j可以 减1
+ */
+
+/**
+ * 同时也可以对matrix中每行都用一次二分查找
  */
