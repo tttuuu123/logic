@@ -41,11 +41,10 @@ var search = function(nums, target) {
   // 将两头相同值去掉，保证下标l的值大于下标r的值
   while (l < nums.length && nums[l] === nums[0]) l += 1;
   while (r >= 0 && nums[r] === nums[0]) r -= 1;
-  let mid = (l + r) >> 1;
   const lVal = nums[l];
   const rVal = nums[r];
   while (l <= r) {
-    mid = (l + r) >> 1;
+    const mid = (l + r) >> 1;
     if (nums[mid] === target) return mid;
     if (nums[mid] <= rVal) {
       if (target <= rVal && target > nums[mid]) {
@@ -63,3 +62,4 @@ var search = function(nums, target) {
   }
   return false;
 };
+
