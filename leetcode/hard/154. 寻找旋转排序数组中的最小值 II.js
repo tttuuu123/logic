@@ -38,23 +38,25 @@
  * @param {number[]} nums
  * @return {number}
  */
-var findMin = function(nums) {
+ var findMin = function(nums) {
   const len = nums.length;
   let ret = Math.min(nums[0], nums[len - 1]);
   let l = 0;
   let r = len - 1;
   while (nums[l] === nums[0]) l += 1;
   while (nums[r] === nums[len - 1]) r -= 1;
-  const lVal = nums[l];
-  const rVal = nums[r];
-  while (l <= r) {
-    const mid = (l + r) >>> 1;
-    if (nums[mid] > rVal) {
-      l = mid + 1;
-    } else {
-      r = mid - 1;
+  if (l < len && r >= 0) { // 类似[1] 这样的入参，会导致l = 1， r = -1
+    const lVal = nums[l];
+    const rVal = nums[r];
+    while (l < r) {
+        const mid = (l + r) >>> 1;
+        if (nums[mid] > rVal) {
+        l = mid + 1;
+        } else {
+        r = mid;
+        }
     }
-    ret = Math.min(ret, nums[l]);
+    ret = Math.min(ret, nums[l])
   }
-  return ret;
+  return ret
 };

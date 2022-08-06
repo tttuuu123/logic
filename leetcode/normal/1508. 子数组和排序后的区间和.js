@@ -38,32 +38,29 @@
  * @return {number}
  */
 var rangeSum = function(nums, n, left, right) {
+  const MOD = 1e9 + 7;
+  let ret = 0;
+  nums.sort((a, b) => a - b);
   const heap = new MinHeap();
-  const mod = 1e9 + 7;
-  for (let i = 0; i < n; i += 1) {
+  for (let i = 0; i < nums.length; i += 1) {
     heap.push({
-      j: i,
-      sum: nums[i]
+      idx: i,
+      sum: nums[i],
     });
   }
-  let ret = 0;
-  for (let i = 1; i <= right; i += 1) {
-    const o = heap.pop(); // 这里吐出的就是所有排序后的子序列和的第i位数据
-    if (i >= left) ret = (ret + o.sum) % mod;
-    if (o.j + 1 < n) heap.push({
-      j: o.j + 1,
-      sum: o.sum + nums[o.j + 1]
+  for (let i = 0; i < right; i += 1) {
+    const o = heap.pop();
+    if (i >= left) ret = (ret + o.sum) % MOD;
+    if (o.idx + 1 < n) heap.push({
+      idx: o.idx + 1,
+      sum: o.sum + nums[o.idx + 1],
     });
   }
   return ret;
 };
 
-function swap(arr, i, j) {
-  [arr[i], arr[j]] = [arr[j], arr[i]];
-}
-
 class MinHeap {
-  constructor() {
+  constructor(arr = []) {
     this.heap = [];
   }
 
@@ -74,8 +71,8 @@ class MinHeap {
     let parent;
     while (cur) {
       parent = (cur - 1) >> 1;
-      if (heap[cur].sum >= heap[parent].sum) break;
-      swap(heap, cur, parent);
+      if (heap[parent].sum <= heap[cur].sum) break;
+      swap(heap, parent, cur);
       cur = parent;
     }
   }
@@ -88,7 +85,7 @@ class MinHeap {
     let cur = 0;
     let child = 1;
     while (child < heap.length) {
-      const right = 2 * cur + 2;
+      const right = cur * 2 + 2;
       if (right < heap.length && heap[right].sum <= heap[child].sum) child = right;
       if (heap[cur].sum <= heap[child].sum) break;
       swap(heap, cur, child);
@@ -97,4 +94,8 @@ class MinHeap {
     }
     return ret;
   }
+}
+
+function swap(arr, i, j) {
+  [arr[i], arr[j]] = [arr[j], arr[i]];
 }
