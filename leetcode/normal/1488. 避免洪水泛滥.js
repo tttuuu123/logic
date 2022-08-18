@@ -62,31 +62,117 @@ var avoidFlood = function(rains) {
   const arr = [];
   for (let i = 0; i < rains.length; i += 1) {
     if (rains[i] > 0) {
-      ret[i] = -1;
       const tar = rains[i]; 
       if (!map[tar]) map[tar] = [];
       map[tar].push(i);
       if (map[tar].length === 2) {
         if (arr.length === 0) return [];
-        const idx = arr.findIndex((val) => {
-          if (val > map[tar][0] && rains[val] === 0) return i;
+        const idx = arr.findIndex((val) => { // 这里可以用二分
+          if (val > map[tar][0]) return i;
         });
         if (idx === -1) return [];
         ret[arr[idx]] = tar;
-        rains[arr[idx]] = -1;
+        arr.splice(idx, 1);
         map[tar].shift();
       }
     } else {
       arr.push(i);
-      ans[i] = 1;
+      ret[i] = 1;
     }
   }
   return ret;
 };
 
 /**
- * 用一个队列queue存储可以抽干任意一个湖泊的天数（即下标）
+ * 用一个数组arr存储可以抽干任意一个湖泊的天数（即下标）
  * 用一个对象map存储每个湖泊装满水的状态（0代表没装满，1代表已经满了）
- * 那么当某个湖泊状态为2时，代表要去queue中查找是否有位置可以提前抽干
- * 但是还要考虑到类似[0, 1, 1]这种场景，也是无法阻止的
+ * 那么当某个湖泊状态为2时，代表要去arr中查找是否有位置可以提前抽干
+ * 但是还要考虑到类似[0, 1, 1]这种场景，也是无法阻止的，所以去arr中查找时还要注意起始坐标
+ */
+
+function swap(arr, i, j) {
+	[arr[i], arr[j]] = [arr[j], arr[i]];
+}
+ 
+class MinHeap {
+	constructor() {
+		this.heap = [];
+	}
+
+	push(val) {
+		const heap = this.heap;
+		heap.push(val);
+		let cur = heap.length - 1;
+		while (cur) {
+			const parent = (cur - 1) >> 1;
+			if (heap[cur] >= heap[parent]) break;
+			swap(heap, cur, parent);
+			cur = parent;
+		}
+	}
+
+	pop() {
+		const heap = this.heap;
+		if (!heap.length) return;
+		swap(heap, 0, heap.length - 1);
+		const ret = heap.pop();
+		let cur = heap[0];
+		let child = 1;
+		while (child < heap.length) {
+			const right = cur * 2 + 2;
+			if (right < heap.length && heap[right] <= heap[child]) child = right;
+			if (heap[cur] <= heap[child]) break;
+			swap(heap, cur, child);
+			cur = child;
+			child = cur * 2 + 1;
+		}
+		return ret;
+	}
+
+	size() {
+		return this.heap.length;
+	}
+}
+
+var avoidFlood = function(rains) {
+	const lakes = {}; // 存储每个湖泊下雨的day
+	for (let i = 0; i < rains.length; i += 1) {
+		const id = rains[i];
+		if (id > 0) {
+			if (!lakes[id]) lakes[id] = [];
+			lakes[id].push(i);
+		}
+	}
+
+	const heap = new MinHeap();
+	const set = new Set(); // 存储目前有雨的湖泊id
+	const ret = [];
+	for (let i = 0; i < rains.length; i += 1) {
+		const id = rains[i];
+		if (id > 0) {
+			if (set.has(id)) return [];
+			ret.push(-1);
+			if (lakes[id].length <= 1) continue; // 至多只会再下一次雨的湖泊不用管
+			set.add(id);
+			lakes[id].shift();
+			heap.push(lakes[id][0]);
+		} else {
+			if (!heap.size()) {
+				ret.push(1);
+			} else {
+				const day = heap.pop();
+				set.delete(rains[day]);
+				ret.push(rains[day]);
+			}
+		}
+	}
+	return ret;
+}
+
+/**
+ * 可以利用小顶堆
+ * 先维护一个 Map<lake, array[]> 的数据结构保存每个湖泊会下雨的天数
+ * 当一个湖泊已经下过雨，且之后还会下雨，就把下一次下雨的天数放入堆中，因为是小顶堆，那么堆顶一定是最近的下雨天
+ * 碰到不下雨的天时，从小顶堆中取出堆顶元素即可
+ * 同时额外维护一个Set（用来防止类似[1, 1, 0]的场景），Set中保存目前有水的湖泊
  */
