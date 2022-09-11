@@ -47,3 +47,19 @@ var minSubArrayLen = function(target, nums) {
   }
   return ret === Infinity ? 0 : ret;
 };
+
+var minSubArrayLen = function(target, nums) {
+  let ret = Infinity;
+  let i = 0, j = 0;
+  let count = 0;
+  while (i < nums.length) {
+    count += nums[i];
+    while (count >= target) {
+      ret = Math.min(ret, i - j + 1);
+      count -= nums[j];
+      j += 1;
+    }
+    i += 1;
+  }
+  return ret === Infinity ? 0 : ret;
+}
