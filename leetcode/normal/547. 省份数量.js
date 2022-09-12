@@ -36,5 +36,74 @@
  * @return {number}
  */
 var findCircleNum = function(isConnected) {
-
+  const cities = new UnionSet(isConnected.length);
+  for (let i = 0; i < isConnected.length; i += 1) {
+    for (let j = 0; j < isConnected[0].length; j += 1) {
+      if (isConnected[i][j]) cities.merge(i, j);
+    }
+  }
+  let ret = 0;
+  for (let i = 0; i < isConnected.length; i += 1) {
+    if (cities.get(i) === i) ret += 1;
+  }
+  return ret;
 };
+
+class UnionSet {
+  constructor(n) {
+    this.parent = [];
+    this.size = [];
+    for (let i = 0; i < n; i += 1) {
+      this.parent[i] = i;
+      this.size[i] = 1;
+    }
+  }
+
+  get(x) {
+    if (x !== this.parent[x]) {
+      this.parent[x] = this.get(this.parent[x]);
+    }
+    return this.parent[x];
+  }
+
+  merge(i, j) {
+    const fa = this.get(i);
+    const fb = this.get(j);
+    if (fa === fb) return;
+    this.parent[fa] = fb;
+    this.size[fb] += this.size[fa];
+  }
+
+  size(x) {
+    return this.size[this.get(x)];
+  }
+}
+
+/**
+ * 并查集就是专门做这种题的
+ */
+
+var findCircleNum = function(isConnected) {
+  const set = new Set();
+  let ret = 0;
+  for (let i = 0; i < isConnected.length; i += 1) {
+    if (!set.has(i)) {
+      ret += 1;
+      dfs(i);
+    }
+  }
+  return ret;
+
+  function dfs(i) {
+    for (let j = 0; j < isConnected.length; j += 1) {
+      if (isConnected[i][j] === 1 && !set.has(j)) {
+        set.add(j);
+        dfs(j);
+      }
+    }
+  }
+}
+
+/**
+ * dfs+递归
+ */
