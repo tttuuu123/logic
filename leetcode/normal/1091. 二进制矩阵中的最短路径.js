@@ -56,7 +56,7 @@ var shortestPathBinaryMatrix = function(grid) {
   while (queue.length) {
     const [i, j, dis] = queue.shift();
     if (i === row - 1 && j === col - 1) return dis;
-    for (let k = 0; k < 8; k += 1) {
+    for (let k = 0; k < dirEnum.length; k += 1) {
       const x = i + dirEnum[k][0];
       const y = j + dirEnum[k][1];
       if (x < 0 || x >= row || y < 0 || y >= col) continue;
@@ -68,3 +68,13 @@ var shortestPathBinaryMatrix = function(grid) {
   }
   return -1;
 };
+
+/**
+ * BFS和DFS的使用场景：
+ * 如果需要找到某个结果是否存在，那么用DFS效率更高，因为DFS会把一条路径进行到底才会回溯
+ * 如果是要某个结果最短，那么BFS效率更高，因为BFS是所有路径同时尝试
+ *
+ * BFS中的visited为什么可以通用：
+ * BFS是在同时尝试所有可能的路径，哪个最快到底，哪个最短
+ * 如果visited为true表明了之前已经有路径更短/相等步数到达这个点，显然就不需要在继续尝试，这个点可以直接放弃
+ */

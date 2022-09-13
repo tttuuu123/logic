@@ -31,33 +31,42 @@
 var solve = function(board) {
   const row = board.length;
   const col = board[0].length;
-  const visit = [];
   const queue = [];
+  const visit = [];
   const ret = [];
   for (let i = 0; i < row; i += 1) {
     visit.push([]);
     ret.push([]);
     for (let j = 0; j < col; j += 1) {
-      ret[i].push('X')
-      if ((i === 0 || i === row - 1 || j === 0 || j === col - 1) && board[i][j] === 'O') {
+      ret[i].push('X');
+      if (
+        (i === 0 || i === row - 1 || j === 0 || j === col - 1) &&
+        board[i][j] === 'O'
+      ) {
         queue.push([i, j]);
-        visit[i].push(true);
+        visit[i][j] = true;
       } else {
-        visit[i].push(false);
+        visit[i][j] = false;
       }
     }
   }
+
   const dirEnum = [[0, 1], [0, -1], [1, 0], [-1, 0]];
   while (queue.length) {
     const [i, j] = queue.shift();
     ret[i][j] = 'O';
-    for (let k = 0; k < 4; k += 1) {
+    for (let k = 0; k < dirEnum.length; k += 1) {
       const x = i + dirEnum[k][0];
       const y = j + dirEnum[k][1];
-      if (x < 0 || x >= row || y < 0 || y >= col) continue;
+      if (x < 0 || x > row - 1 || y < 0 || y > col - 1) continue;
       if (visit[x][y]) continue;
       visit[x][y] = true;
       if (board[x][y] === 'O') queue.push([x, y]);
+    }
+  }
+  for (let i = 0; i < row; i += 1) {
+    for (let j = 0; j < col; j += 1) {
+      board[i][j] = ret[i][j]
     }
   }
   return ret;
