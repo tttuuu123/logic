@@ -44,11 +44,21 @@ var longestCommonSubsequence = function(text1, text2) {
   const dp = Array(len1 + 1).fill(0).map(() => Array(len2 + 1).fill(0));
   for (let i = 1; i <= len1; i += 1) {
     for (let j = 1; j <= len2; j += 1) {
-      dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
       if (text1[i - 1] === text2[j - 1]) {
-        dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - 1]);
+        dp[i][j] = dp[i - 1][j - 1] + 1;
+      } else {
+        dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
       }
     }
   }
   return dp[len1][len2];
 };
+
+/**
+ * dp[i][j] 表示在 text1前i个字符 和 text2前j个字符 的 最大公共子序列长度
+ * 一般场景下
+ * dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1])
+ * 若 text1[i - 1] === text2[j - 1]
+ * dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - 1] + 1)
+ */
+
