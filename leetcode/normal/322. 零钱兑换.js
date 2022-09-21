@@ -26,19 +26,19 @@
  * @return {number}
  */
 var coinChange = function(coins, amount) {
-  const result = new Array(amount + 1).fill(amount + 1);
-  result[0] = 0;
+  // 硬币最多的场景就是amount枚，所以初始赋予一个不可能的答案amount + 1
+  const dp = Array(amount + 1).fill(amount + 1);
+  dp[0] = 0;
   for (let i = 1; i <= amount; i += 1) {
     coins.forEach((coin) => {
-      if ((i - coin) >= 0) {
-        result[i] = Math.min(result[i], result[i - coin] + 1);
+      if (i - coin >= 0) {
+        dp[i] = Math.min(dp[i], dp[i - coin] + 1);
       }
     });
   }
-  return result[amount] === amount + 1 ? -1 : result[amount];
-};
-
+  // 如果等于amount + 1说明不可能
+  return dp[amount] === amount + 1 ? -1 : dp[amount];
+}
 /**
- * 以coins = [1, 2, 5]为例
- * f(n) = min(f(n - 1) + 1, f(n - 2) + 1, f(n - 3) + 1)
+ * dp[n] 代表 n 元 所需最小硬币数
  */
