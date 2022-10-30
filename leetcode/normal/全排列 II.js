@@ -55,8 +55,8 @@ var permuteUnique = function(nums) {
  * 一种是把用过的数字从nums中去掉，回溯时再复原
  * 
  * 另一种是维护一个<[]>used，和nums等长，初始均为false。遍历中将使用的数字下标置为true
- * 过滤条件就变为了 if (ued[i] || (i > 0 && nums[i] === nums[i - 1] && !used[i - 1])) continue
- * 既可保证每次填入的数一定是这个数所在重复数集合中「从左往右第一个未被填过的数字」
+ * 过滤条件就变为了 if (used[i] || (i > 0 && nums[i] === nums[i - 1] && !used[i - 1])) continue
+ * 即可保证每次填入的数一定是这个数所在重复数集合中「从左往右第一个未被填过的数字」
  * 同样的在回溯时要将used[i]复原为true
  */
 
