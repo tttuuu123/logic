@@ -17,24 +17,23 @@
   著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 */
 
+
 /**
  * @param {number} n
  * @return {number}
  */
 var nthUglyNumber = function(n) {
-  let arr = [];
-  arr.push(1);
+  let i = 1;
   let a = 0, b = 0, c = 0;
-  let count = 1;
-  while(count < n){
-    let x2 = arr[a] * 2;
-    let x3 = arr[b] * 3;
-    let x5 = arr[c] * 5;
+  const arr = [1];
+  while (i++ < n) {
+    const x2 = arr[a] * 2;
+    const x3 = arr[b] * 3;
+    const x5 = arr[c] * 5;
     arr.push(Math.min(x2, x3, x5));
-    if (arr[count] === x2) a += 1;
-    if (arr[count] === x3) b += 1;
-    if (arr[count] === x5) c += 1;
-    count += 1;
+    if (arr[arr.length - 1] === x2) a += 1;
+    if (arr[arr.length - 1] === x3) b += 1;
+    if (arr[arr.length - 1] === x5) c += 1;
   }
   return arr[n - 1];
 };
