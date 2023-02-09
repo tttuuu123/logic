@@ -51,21 +51,29 @@
  * @return {Node}
  */
 var insert = function(head, insertVal) {
+  const node = new Node(insertVal);
   if (!head) {
-    const node = new Node(insertVal);
     node.next = node;
     return node;
+  }
+  if (head.next === head) {
+    head.next = node;
+    node.next = head;
+    return head;
   }
   let slow = head;
   let fast = head.next;
   // 有2种场景
   // 一种是 [1, 1, 2] 插入1
   // 一种是 [1, 1, 2] 插入3
-  while (!(slow.val <= insertVal && fast.val >= insertVal) || !(insertVal > slow.val && insertVal > fast.val && slow.val > fast.val)) {
+  while (fast !== head) {
+    if (insertVal >= slow.val && insertVal <= fast.val) break;
+    if (slow.val > fast.val) {
+      if (insertVal > slow.val || insertVal < fast.val) break;
+    }
     slow = slow.next;
     fast = fast.next;
   }
-  const node = new Node(insertVal);
   slow.next = node;
   node.next = fast;
   return head;

@@ -82,26 +82,32 @@
  * @return {Node}
  */
 var flatten = function(head) {
-  help(head);
+  dfs(head);
   return head;
 };
 
-function help(head) {
+function dfs(head) {
   let cur = head;
+  let last = null;
   let next = null;
   while (cur) {
+    next = cur.next;
     if (cur.child) {
-      next = cur.next;
+      const childLast = dfs(cur.child);
       const child = cur.child;
       cur.next = child;
       child.prev = cur;
+      if (next) {
+        childLast.next = next;
+        next.prev = childLast;
+      }
       cur.child = null;
-      help(child);
+      last = childLast;
+    } else {
+      last = cur;
     }
-    if (!cur.next && next) {
-      cur.next = next;
-      next.prev = cur;
-    }
-    cur = cur.next;
+
+    cur = next;
   }
+  return last;
 }
