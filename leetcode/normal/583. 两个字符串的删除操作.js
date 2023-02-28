@@ -81,7 +81,7 @@ var minDistance = function(word1, word2) {
  * 显然对于任意 i 有 dp[i][0] = i
  * 同理对于任意 j 有dp[0][j] = j
  *
- * 当 word1[i - 1] === word2[j] 时
+ * 当 word1[i - 1] === word2[j - 1] 时
  * dp[i][j] 就等于 dp[i - 1][j - 1]
  * 反之
  * dp[i][j] = Math.min(dp[i - 1][j], dp[i][j - 1]) + 1

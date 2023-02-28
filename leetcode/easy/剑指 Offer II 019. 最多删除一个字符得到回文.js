@@ -34,8 +34,7 @@
 var validPalindrome = function(s) {
   const len = s.length;
   if (len === 1 || len === 2) return true;
-  let l = 0, r = len - 1;
-  return help(l, r, false);
+  return help(0, len - 1, false);
 
   function help(l, r, hasDel) {
     while (l < r) {
