@@ -54,3 +54,31 @@ var longestSubarray = function(nums) {
   if (canUse0) max -= 1;
   return max;
 };
+
+
+var longestSubarray = function(nums) {
+  const len = nums.length;
+  const l = [0];
+  for (let i = 1; i < len; i += 1) {
+    l[i] = nums[i - 1] === 0 ? 0 : l[i - 1] + 1;
+  }
+  const r = [];
+  r[len - 1] = 0;
+  for (let i = len - 2; i >= 0; i -= 1) {
+    r[i] = nums[i + 1] === 0 ? 0 : r[i + 1] + 1
+  }
+  let max = 0;
+  let has0 = false;
+  for (let i = 0; i < len; i += 1) {
+    if (nums[i] === 0) {
+      max = Math.max(max, l[i] + r[i]);
+      has0 = true;
+    }
+  }
+  return has0 ? max : len - 1;
+};
+
+/**
+ * 如果存在0
+ * max = 某个0 （左侧连续1的数量 + 右侧连续1的数量）
+ */
