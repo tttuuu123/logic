@@ -86,6 +86,9 @@ class UnionSet {
     }
   }
 
+  // 把所有子节点都挂靠在根节点下
+  // 例如 有 a->b 权重为3 b->c 权重为4
+  // 那么 a 挂靠到 c 下，权重为 3 * 4 = 12
   get(a) {
     const origin = this.parent[a];
     if (isNaN(origin)) return null;
