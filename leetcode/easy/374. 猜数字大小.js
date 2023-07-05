@@ -59,9 +59,9 @@ var guessNumber = function(n) {
     const ret = guess(mid);
     if (ret === 0) return mid;
     if (ret === -1) {
-      l = mid + 1;
+      r = mid + 1;
     } else {
-      r = mid - 1;
+      l = mid - 1;
     }
   }
 };
