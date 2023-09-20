@@ -45,7 +45,7 @@ var longestCommonSubsequence = function(text1, text2) {
   for (let i = 1; i <= len1; i += 1) {
     for (let j = 1; j <= len2; j += 1) {
       if (text1[i - 1] === text2[j - 1]) {
-        dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - 1] + 1);
+        dp[i][j] = dp[i - 1][j - 1] + 1;
       } else {
         dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
       }
@@ -59,6 +59,6 @@ var longestCommonSubsequence = function(text1, text2) {
  * 一般场景下
  * dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1])
  * 若 text1[i - 1] === text2[j - 1]
- * dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - 1] + 1)
+ * dp[i][j] = dp[i - 1][j - 1] + 1
  */
 
