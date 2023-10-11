@@ -41,26 +41,24 @@
  * @return {number}
  */
 var change = function(amount, coins) {
-  const dp = Array(coins.length).fill(0).map(() => Array(amount + 1).fill(0));
-  for (let j = 0; j <= amount; j += 1) {
-    dp[0][j] = 1;
+  const dp = Array(coins.length + 1).fill(0).map(() => Array(amount + 1).fill(0));
+  for (let i = 0; i <= coins.length; i += 1) {
+    dp[i][0] = 1;
   }
 
-  for (let i = 1; i < coins.length; i += 1) {
-    for (let j = 0; j <= amount; j += 1) {
-      if (coins[i] > j) {
-        dp[i][j] = dp[i - 1][j];
-      } else {
-        dp[i][j] = dp[i - 1][j] + dp[i][j - coins[i]];
+  for (let i = 1; i <= coins.length; i += 1) {
+    for (let j = 1; j <= amount; j += 1) {
+      dp[i][j] = dp[i - 1][j];
+      if (coins[i - 1] <= j) {
+        dp[i][j] += dp[i][j - coins[i - 1]]
       }
     }
   }
-
-  return dp[coins.length - 1][amount];
+  return dp[coins.length][amount];
 };
 
 /**
- * dp[i][j] 代表用i种硬币凑成金额j的方案数
+ * dp[i][j] 代表用前i种硬币凑成金额j的方案数
  * 若 coins[i] > j，则 dp[i][j] = dp[i - 1][j]
  * 否则 dp[i][j] = dp[i - 1][j] + dp[i][j - coins[i]];
  */

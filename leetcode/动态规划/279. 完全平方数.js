@@ -29,7 +29,7 @@ var numSquares = function(n) {
 
   for (let i = 0; i <= n; i += 1) {
     for (let j = 1; j * j <= i; j += 1) {
-      dp[j] = Math.min(dp[j], dp[j - i * i] + 1);
+      dp[i] = Math.min(dp[i], dp[i - j * j] + 1);
     }
   }
   return dp[n];
