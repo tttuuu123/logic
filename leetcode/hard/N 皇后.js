@@ -72,3 +72,33 @@ var solveNQueens = function(n) {
  * 行+列（左斜对角线）不能一样
  * 行-列（右斜对角线）不能一样
  */
+
+
+var solveNQueens = function(n) {
+  const ret = [];
+  help([], 0);
+  return ret;
+
+  function help(arr, curRow) {
+    if (curRow === n) {
+      ret.push(arr.map((col) => {
+        const row = Array(n).fill('.');
+        row[col] = 'Q';
+        return row.join('');
+      }));
+    }
+    for (let curCol = 0; curCol < n; curCol += 1) {
+      const noPlace = arr.some((col, row) => {
+        return (
+          curCol === col ||
+          (curCol + curRow) === (col + row) ||
+          (curRow - curCol) === (row - col)
+        );
+      })
+      if (noPlace) continue;
+      arr.push(curCol);
+      help(arr, curRow + 1);
+      arr.pop();
+    }
+  }
+}

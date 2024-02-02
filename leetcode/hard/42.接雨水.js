@@ -36,3 +36,50 @@ var trap = function(height) {
 /**
  * 每次ret累加的是一横排，比如idx 2~3 高度为1的和，后面再加上idx 1~4 高度为2的和
  */
+
+var trap = function(height) {
+  let ret = 0;
+  for (let i = 1; i < height.length; i += 1) {
+    let leftTop = 0, rightTop = 0;
+    for (let l = i - 1; l >= 0; l -= 1) {
+      leftTop = Math.max(leftTop, height[l]);
+    }
+    if (leftTop > height[i]) {
+      for (let r = i + 1; r < height.length; r += 1) {
+        rightTop = Math.max(rightTop, height[r]);
+      }
+    }
+    const top = Math.min(leftTop, rightTop);
+    if (top > height[i]) {
+      ret += top - height[i];
+    }
+  }
+  return ret;
+}
+
+/**
+ * 暴力解法
+ * 时间复杂度O(n^2)
+ */
+
+var trap = function(height) {
+  const leftMax = [0], rightMax = [0];
+  for (let i = 1; i < height.length; i += 1) {
+    leftMax[i] = Math.max(leftMax[i - 1], height[i - 1]);
+  }
+  for (let i = height.length - 2; i >= 0; i -= 1) {
+    rightMax.unshift(Math.max(rightMax[0], height[i + 1]));
+  }
+  let ret = 0;
+  for (let i = 0; i < height.length; i += 1) {
+    const top = Math.min(leftMax[i], rightMax[i]);
+    if (top > height[i]) ret += top - height[i];
+  }
+  return ret;
+}
+
+/**
+ * 基于暴力解法优化
+ * 提前计算每个点位两边的边界
+ * 时间复杂度O(n)
+ */

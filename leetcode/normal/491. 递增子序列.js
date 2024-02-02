@@ -42,3 +42,24 @@ var findSubsequences = function(nums) {
     }
   }
 };
+
+var findSubsequences = function(nums) {
+  const ret = [];
+  help([], 0);
+  return ret;
+
+  function help(arr, i) {
+    if (arr.length > 1) {
+      ret.push([...arr]);
+    }
+    if (i === nums.length) return;
+    const set = new Set();
+    for (let j = i; j < nums.length; j += 1) {
+      if ((arr.length > 0 && nums[j] < arr[arr.length - 1]) || set.has(nums[j])) continue;
+      set.add(nums[j]);
+      arr.push(nums[j]);
+      help(arr, j + 1);
+      arr.pop();
+    }
+  }
+}
