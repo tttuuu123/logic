@@ -52,3 +52,25 @@ var maxAreaOfIsland = function(grid) {
     return 1 + dfs(i - 1, j) + dfs(i + 1, j) + dfs(i, j + 1) + dfs(i, j - 1);
   }
 };
+
+var maxAreaOfIsland = function(grid) {
+  let ret = 0;
+  const row = grid.length;
+  const col = grid[0].length;
+  for (let i = 0; i < row; i += 1) {
+    for (let j = 0; j < col; j += 1) {
+      if (grid[i][j] === 1) {
+        ret = Math.max(ret, dfs(i, j));
+      }
+    }
+  }
+  return ret;
+
+  function dfs(i, j) {
+    if (i < 0 || i >= row) return 0;
+    if (j < 0 || j >= col) return 0;
+    if (grid[i][j] === 0) return 0;
+    grid[i][j] = 0;
+    return 1 + dfs(i + 1, j) + dfs(i - 1, j) + dfs(i, j + 1) + dfs(i, j - 1);
+  }
+}
