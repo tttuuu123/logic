@@ -65,3 +65,22 @@ var buildTree = function(preorder, inorder) {
  * 先序遍历
  * [根节点, [左子树的先序遍历结果], [右子树的中序遍历结果]]
  */
+
+var buildTree = function(preorder, inorder) {
+  const map = {};
+  for (let i = 0; i < inorder.length; i += 1) {
+    map[inorder[i]] = i;
+  }
+  return help(0, preorder.length - 1, 0, inorder.length - 1);
+
+  function help(preStart, preEnd, inorderStart, inorderEnd) {
+    if (preStart > preEnd) return null;
+    const rootVal = preorder[preStart];
+    const root = new TreeNode(rootVal);
+    const inorderRootIdx = map[rootVal];
+    const leftCount = inorderRootIdx - inorderStart; // 左子树的节点数
+    root.left = help(preStart + 1, preStart + 1 + leftCount - 1, inorderStart, inorderRootIdx - 1);
+    root.right = help(preStart + leftCount + 1, preEnd, inorderRootIdx + 1, inorderEnd);
+    return root;
+  }
+};
